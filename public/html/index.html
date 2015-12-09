@@ -3,35 +3,14 @@
 	<head>
 		<title>Listies</title>
 		<meta charset="utf-8">
+		<link href="/css/styles.css" rel="stylesheet" type="text/css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+		<script src="/js/main.js"></script>
 	</head>
-	<body>
-		<div>
-			<h1>Listies</h1>
-
-			<!-- sign up form -->
-		<div>
-			<div>Log In</div>
-			<div>Sign Up</div>
-		</div>
-		<div>
-			<form method="POST" action="auth/signup">
-				<input type="text" name="username" placeholder="Username...">
-				<input type="text" name="email" placeholder="E-mail address...">
-				<input type="password" name="password" placeholder="Password...">
-				<input type="text" name="birthday" placeholder="MM/DD/YYYY">
-				<input type="submit" value="sign up">
-			</form>
-		</div>
-
-			<!-- login form -->
-		<div>
-			<form method="POST" action="/auth/login">
-				<input type="text" name="usernmae" placeholder="username...">
-				<input type="password" name="password" placeholder="Password...">
-				<input type="submit" value="log in">
-			</form>
-		</div>
-		
+	<body ng-app="listApp">
+		<h1 class="dark-bg title">Listies</h1>
+		<div class="template" ng-view>
 		</div>
 	</body>
 </html>

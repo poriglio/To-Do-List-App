@@ -1,0 +1,76 @@
+html *{
+	padding: 0px;
+	margin: 0px;
+	margin: auto;
+	font-size: 16px;
+	font-family: Lato, sans-serif;
+	box-sizing: border-box;
+}
+
+.template{
+	margin-top: 1rem;
+	margin-botton: 1rem;
+}
+
+.title{
+	text-align: center;
+	font-size: 2rem;
+	width: 100%;
+}
+
+/*SIGNUP and LOGIN STYLES*/
+
+.form-box{
+	padding: 1rem;
+	width: 100%;
+	max-width: 30rem;
+	height: 14rem;
+	border-radius: 8px;
+}
+
+.home-form{
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+.form-box input{
+    padding: 0.2rem;
+    margin: 0.4rem auto;
+    display: block;
+    width: 90%;
+    max-width: 300px;
+}
+
+.tabs{
+	max-width: 30rem;
+}
+
+.tab{
+	display: inline-block;
+	padding: 0.5rem 1.25rem;
+	margin-left: 0.5rem;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.light-bg{
+	background-color: #edf2f7;
+}
+
+.dark-bg{
+	background-color: #c9d7e8;	
+}
+
+.button{
+	border-style: none;
+	border-radius: 8px;
+}
+
+@media screen and (max-width: 500px){
+
+	.form-box{
+		border-radius: 0px;
+	}
+
+}

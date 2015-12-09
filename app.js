@@ -46,9 +46,11 @@ app.use(passportConfig.ensureAuthenticated)
 // AUTHENTICATED ROUTES:
 // -=-=-=-=-=-=-=-=-=-=-
 
-app.get("/profile",function(request,response){
-	response.sendFile("/html/profile.html",{root:"./public"})
+app.get("/api/me",function(request,response){
+	response.send(request.user)
 })
+
+app.get("/auth/logout",authController.logout)
 
 var port = 3000
 
