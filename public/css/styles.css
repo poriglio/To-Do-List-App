@@ -23,12 +23,19 @@ html *{
 
 /*SIGNUP and LOGIN STYLES*/
 
-.form-box{
+.box{
 	padding: 1rem;
 	width: 100%;
 	max-width: 30rem;
-	height: 14rem;
 	border-radius: 8px;
+}
+
+.profile-box{
+	display: inline-block;
+}
+
+.form-box{
+	height: 14rem;
 }
 
 .home-form{
@@ -38,11 +45,14 @@ html *{
 }
 
 .form-box input{
+    width: 90%;
+    max-width: 300px;
+}
+
+input{
     padding: 0.2rem;
     margin: 0.4rem auto;
     display: block;
-    width: 90%;
-    max-width: 300px;
 }
 
 .tabs{
@@ -72,7 +82,7 @@ html *{
 
 @media screen and (max-width: 500px){
 
-	.form-box{
+	.box{
 		border-radius: 0px;
 	}
 

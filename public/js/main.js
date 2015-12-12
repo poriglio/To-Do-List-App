@@ -38,6 +38,8 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 		items    : [],
 		username : "",
 	}
+
+	$scope.activeList = []
 	
 	$http.get("/api/list").then(function(returnData){
 		$scope.lists = returnData.data
@@ -52,15 +54,33 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	})
 
 	$scope.selectList = function($index){
+		$scope.activeList = []
 		$scope.lists[$index].active = true
 		for(var i = 0; i < $scope.lists.length; i++){
 			if(i!==$index){
 				$scope.lists[i].active = false
 			}
 		}
+		$scope.activeList.push($scope.lists[$index])
 	}
 
 	$scope.addItem = function(item,difficulty){
+		$scope.activeList[0].items.push({
+			item       : item,
+			complete   : false,
+			difficulty : difficulty ? difficulty : 0,
+		})
+	}
+
+	$scope.saveList = function(){
+		$http({
+			method  : 'POST',
+			url     : '/api/list',
+			data    : $scope.activeList[0],
+		})
+	}
+
+	$scope.createItem = function(item,difficulty){
 		$scope.list.items.push({
 			item     : item,
 			complete : false,
@@ -68,7 +88,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 		})
 	}
 	
-	$scope.submitList = function(){
+	$scope.createList = function(){
 		$http({
 			method  : 'POST',
 			url     : '/api/list',

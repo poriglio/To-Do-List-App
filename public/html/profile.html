@@ -1,4 +1,4 @@
-<div ng-if="!username" class="form-box dark-bg">
+<div ng-if="!username" class="box form-box dark-bg">
 	<div class="text-center">Please log in to view this page.</div>
 	<form class="home-form" method="POST" action="/auth/login">
 		<input type="text" name="username" placeholder="Username...">
@@ -11,7 +11,7 @@
 
 	<!-- PROFILE INFO -->
 
-	<div>
+	<div class="box light-bg profile-box">
 		<h1>Welcome back, {{username}}!</h1>
 		<p>You have been checking off since {{user.dateJoined | date:"M/d/yyyy"}}</p>
 		<a href="/auth/logout">log out</a>
@@ -19,7 +19,7 @@
 
 	<!-- USER'S LISTS -->
 
-	<div>
+	<div class="box dark-bg profile-box">
 		<h1>{{username}}'s Lists</h1>
 		<ul>
 			<li ng-click="selectList($index)" ng-repeat="list in lists">{{list.title}} - created {{list.dateCreated | date:"M/d/yyyy"}}</li>
@@ -28,7 +28,7 @@
 
 	<!-- VIEW ACTIVE LIST -->
 
-	<div ng-if="activeList">
+	<div class="box light-bg profile-box" ng-if="activeList">
 		<h1>Selected List</h1>
 		<div ng-repeat="list in activeList">
 			<h2>{{list.title}}</h2>
@@ -43,10 +43,10 @@
 
 	<!-- EDIT ACTIVE LIST -->
 
-	<div>
+	<div class="box dark-bg profile-box">
 		<h1>Edit List</h1>
 		<div ng-repeat="list in lists | filter : {active:true}">
-			<form ng-submit="submitList()">
+			<form ng-submit="saveList()">
 				<label>Title:</label>
 				<input name="title" type="text" ng-model="list.title">
 				<label>Items:</label>
@@ -75,9 +75,9 @@
 
 	<!-- CREATE NEW LIST -->
 
-	<div>
+	<div class="box light-bg profile-box">
 		<h1>New List</h1>
-		<form ng-submit="submitList()">
+		<form ng-submit="createList()">
 			<label>Title:</label>
 			<input name="title" type="text" ng-model="list.title">
 			<label>Items:</label>
@@ -91,7 +91,7 @@
 			Medium<input type="radio" ng-model="difficulty" value="medium">
 			Hard<input type="radio" ng-model="difficulty" value="hard">
 			Challenge<input type="radio" ng-model="difficulty" value="challenge">
-			<button type="button" ng-click="addItem(item,difficulty)">add item</button>
+			<button type="button" ng-click="createItem(item,difficulty)">add item</button>
 			<input type="submit" value="save list">
 		</form>
 	</div>
