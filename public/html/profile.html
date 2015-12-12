@@ -1,14 +1,23 @@
-<div ng-if="!username">
-	You must be logged in to view this page!
+<div ng-if="!username" class="form-box dark-bg">
+	<div class="text-center">Please log in to view this page.</div>
+	<form class="home-form" method="POST" action="/auth/login">
+		<input type="text" name="username" placeholder="Username...">
+		<input type="password" name="password" placeholder="Password...">
+		<input class="button light-bg" type="submit" value="log in">
+	</form>
 </div>
 
 <div ng-if="username">
+
 	<div>
 		<h1>Hello, {{username}}!</h1>
 	</div>
 
 	<div>
 		<h1>{{username}}'s Lists</h1>
+		<ul>
+			<li ng-repeat="list in lists">{{list.title}}</li>
+		</ul>
 	</div>
 
 	<div>
@@ -17,9 +26,20 @@
 
 	<div>
 		<h1>New List</h1>
+		<h2>{{list.title}}</h2>
+		<form ng-submit="submitList()">
+			<input name="title" type="text" ng-model="list.title">
+			<ul>
+				<li ng-repeat="thing in list.items">{{thing.item}}</li>
+			</ul>
+			<input ng-model="item">
+			<button type="button" ng-click="addItem(item)">add item</button>
+			<input type="submit" value="save list">
+		</form>
 	</div>
 
 	<div>
 		<h1>Edit List</h1>
 	</div>
+
 </div>

@@ -31,12 +31,42 @@ angular.module("listApp").controller("homeController",["$scope",function($scope)
 
 }])
 
-angular.module("listApp").controller("profileController",["$scope","$http",function($scope,$http){
+angular.module("listApp").controller("profileController",["$scope","$http","callFactory",function($scope,$http,callFactory){
 
+	$scope.list = {
+		title    : "",
+		items    : [],
+		username : "",
+	}
+	
+	$http.get("/api/list").then(function(returnData){
+		$scope.lists = returnData.data
+	})
+	
 	$http.get("/api/me").then(function(returnData){
 		if(returnData.data.username){
 			$scope.username = returnData.data.username
+			$scope.list.username = $scope.username
 		}
 	})
+
+
+	$scope.item = ""
+
+	$scope.addItem = function(item){
+		$scope.list.items.push({
+			item     : item,
+			complete : false,
+		})
+	}
+
+	$scope.submitList = function(){
+		console.log($scope.list)
+		$http({
+			method  : 'POST',
+			url     : '/api/list',
+			data    : $scope.list,
+		})
+	}
 
 }])

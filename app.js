@@ -46,9 +46,15 @@ app.use(passportConfig.ensureAuthenticated)
 // AUTHENTICATED ROUTES:
 // -=-=-=-=-=-=-=-=-=-=-
 
+var listController = require("./controllers/list.js")
+
 app.get("/api/me",function(request,response){
 	response.send(request.user)
 })
+
+app.post("/api/list",listController.saveList)
+
+app.get("/api/list",listController.getLists)
 
 app.get("/auth/logout",authController.logout)
 

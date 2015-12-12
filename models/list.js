@@ -2,10 +2,10 @@ var mongoose = require("mongoose")
 
 var listSchema = mongoose.Schema({
 	dateCreated   : {type:Number},
-	username      : {type: },
-	title         : {type: },
-	items         : {type: },
-	complete      : {type: },
+	username      : {type:String},
+	title         : {type:String},
+	items         : {type:Array},
+	complete      : {type:Boolean, default:false},
 })
 
 module.exports = mongoose.model("List",listSchema)
