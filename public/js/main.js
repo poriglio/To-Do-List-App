@@ -47,21 +47,28 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 		if(returnData.data.username){
 			$scope.username = returnData.data.username
 			$scope.list.username = $scope.username
+			$scope.user = returnData.data
 		}
 	})
 
+	$scope.selectList = function($index){
+		$scope.lists[$index].active = true
+		for(var i = 0; i < $scope.lists.length; i++){
+			if(i!==$index){
+				$scope.lists[i].active = false
+			}
+		}
+	}
 
-	$scope.item = ""
-
-	$scope.addItem = function(item){
+	$scope.addItem = function(item,difficulty){
 		$scope.list.items.push({
 			item     : item,
 			complete : false,
+			difficulty: difficulty ? difficulty : 0,
 		})
 	}
-
+	
 	$scope.submitList = function(){
-		console.log($scope.list)
 		$http({
 			method  : 'POST',
 			url     : '/api/list',

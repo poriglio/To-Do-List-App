@@ -13,15 +13,14 @@ var saveList = function(request,response){
 	})
 
 	newList.save(function(error){
-		if(!error){
-			console.log("list created!")
-		}
 	})
-
 }
 
 var getLists = function(request,response){
 	var user = request.user.username
+	List.find({username : user},function(error,docs){
+		response.send(docs)
+	})
 }
 
 module.exports = {
