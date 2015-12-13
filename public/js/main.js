@@ -54,6 +54,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	})
 
 	$scope.selectList = function($index){
+		$scope.showNewForm = false
 		$scope.activeList = []
 		$scope.lists[$index].active = true
 		for(var i = 0; i < $scope.lists.length; i++){
@@ -73,6 +74,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	}
 
 	$scope.saveList = function(){
+		$scope.showEdit = false
 		$http({
 			method  : 'POST',
 			url     : '/api/list',
@@ -89,11 +91,37 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	}
 	
 	$scope.createList = function(){
+		$scope.showNewForm = false
 		$http({
 			method  : 'POST',
 			url     : '/api/list',
 			data    : $scope.list,
 		})
+	}
+
+	$scope.closeList = function(){
+		$scope.activeList = []
+	}
+
+	$scope.toggleEdit = function(){
+		$scope.showNewForm = false
+		if($scope.showEdit){
+			$scope.showEdit = false
+		}
+		else{
+			$scope.showEdit = true
+		}
+	}
+
+	$scope.toggleNew = function(){
+		$scope.activeList = []
+		$scope.showEdit = false
+		if($scope.showNewForm){
+			$scope.showNewForm = false
+		}
+		else{
+			$scope.showNewForm = true
+		}		
 	}
 
 }])

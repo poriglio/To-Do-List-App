@@ -7,6 +7,10 @@ html *{
 	box-sizing: border-box;
 }
 
+li{
+	list-style-type: none;
+}
+
 .template{
 	margin-top: 1rem;
 	margin-botton: 1rem;
@@ -31,7 +35,8 @@ html *{
 }
 
 .profile-box{
-	display: inline-block;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .form-box{
@@ -53,6 +58,10 @@ input{
     padding: 0.2rem;
     margin: 0.4rem auto;
     display: block;
+}
+
+input[type="radio"]{
+	display: inline-block;
 }
 
 .tabs{
@@ -78,6 +87,29 @@ input{
 .button{
 	border-style: none;
 	border-radius: 8px;
+}
+
+.list-item{
+	width: 100%;
+	padding: 0.6rem;
+	margin-top: 0.2rem;
+	border-radius: 8px;
+}
+
+.list-item-1{
+	background-color: #f7d4d4;
+}
+
+.list-item-2{
+	background-color: #eb9494;
+}
+
+.list-item-3{
+	background-color: #de5454;
+}
+
+.list-item-4{
+	background-color: #d62929;
 }
 
 @media screen and (max-width: 500px){
