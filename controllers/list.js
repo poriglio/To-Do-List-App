@@ -3,7 +3,6 @@ var List = require("../models/list.js")
 var saveList = function(request,response){
 
 	List.find({_id:request.body._id},function(error,docs){
-		console.log(docs)
 		if(docs.length === 0){
 			var d = new Date()
 			var n = d.getTime()
@@ -34,7 +33,16 @@ var getLists = function(request,response){
 	})
 }
 
+var deleteList = function(request,response){
+	var user = request.user.username
+	var id = request.body.id
+	List.remove({_id : id,username:user},function(error,docs){
+		response.redirect("/#/profile")
+	})
+}
+
 module.exports = {
-	saveList : saveList,
-	getLists : getLists,
+	saveList   : saveList,
+	getLists   : getLists,
+	deleteList : deleteList,
 }

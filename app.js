@@ -52,6 +52,8 @@ app.get("/api/me",function(request,response){
 	response.send(request.user)
 })
 
+app.post("/api/remove/list",listController.deleteList)
+
 app.post("/api/list",listController.saveList)
 
 app.get("/api/list",listController.getLists)

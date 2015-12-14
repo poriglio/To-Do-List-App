@@ -33,9 +33,12 @@
 				<ul>
 					<li class="list-item" ng-class="{'list-item-1':item.difficulty === 'easy','list-item-2':item.difficulty === 'medium','list-item-3':item.difficulty === 'hard','list-item-4':item.difficulty === 'challenge'}" ng-repeat="item in list.items">{{item.item}}</li>
 				</ul>
+				<button ng-click="toggleEdit()" type="button">edit</button>
+				<form method="post" action="/api/remove/list"> 
+					<input type="text" style="display: none;" name="id" ng-model="list._id">
+					<input type="submit" value="delete list">
+				</form>
 			</div>
-			<button ng-click="toggleEdit()" type="button">edit</button>
-			<button type="button">delete</button>
 		</div>
 
 		<!-- EDIT ACTIVE LIST -->

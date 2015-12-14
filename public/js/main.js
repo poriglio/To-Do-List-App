@@ -49,6 +49,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 				return b.dateCreated - a.dateCreated
 			})
 			$scope.activeList.push(returnData.data[0])
+			$scope.activeList[0].active = true
 		})
 	}
 
@@ -104,6 +105,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	
 	$scope.createList = function(){
 
+		$scope.list.active = true
 		$scope.hideActiveList = false
 		$scope.showNewForm = false
 		$http({
