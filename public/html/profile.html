@@ -9,56 +9,78 @@
 
 <div ng-if="username">
 
-	<!-- PROFILE INFO -->
+		<!-- PROFILE INFO -->
+	<div class="col-thin">
+		<div class="box light-bg profile-box text-center">
+			<h1>Welcome back, {{username}}!</h1>
+			<a href="/auth/logout">log out</a>
 
-	<div class="box light-bg profile-box text-center">
-		<h1>Welcome back, {{username}}!</h1>
-		<p>You have been checking off since {{user.dateJoined | date:"M/d/yyyy"}}</p>
-		<a href="/auth/logout">log out</a>
-	</div>
-
-	<!-- USER'S LISTS -->
-
-	<div class="box dark-bg profile-box">
-		<h1 class="text-center">Your Lists</h1>
-		<ul>
-			<li ng-click="selectList($index)" ng-repeat="list in lists">{{list.title}} - created {{list.dateCreated | date:"M/d/yyyy"}}</li>
-		</ul>
-		<a ng-click="toggleNew()">new list</a>
-	</div>
-
-	<!-- VIEW ACTIVE LIST -->
-
-	<div class="box light-bg profile-box" ng-if="activeList.length > 0">
-		<div ng-repeat="list in activeList">
-			<h2 class="text-center">{{list.title}}</h2>
+		<!-- USER'S LISTS -->
+		
+			<h1 class="text-center">Your Lists</h1>
+			<p ng-show="lists.length == 0">You have not created any lists.</p>
 			<ul>
-				<li class="list-item" ng-class="{'list-item-1':item.difficulty === 'easy','list-item-2':item.difficulty === 'medium','list-item-3':item.difficulty === 'hard','list-item-4':item.difficulty === 'challenge'}" ng-repeat="item in list.items">{{item.item}}</li>
+				<li ng-click="selectList($index)" ng-repeat="list in lists">{{list.title}} - created {{list.dateCreated | date:"M/d/yyyy"}}</li>
 			</ul>
+			<a ng-click="toggleNew()">new list</a>
 		</div>
-		<button ng-click="toggleEdit()" type="button">edit</button>
-		<button type="button">delete</button>
-		<button ng-click="closeList()" type="button">close</button>
 	</div>
+	<!-- VIEW ACTIVE LIST -->
+	<div class="col-wide">
+		<div class="box light-bg profile-box" ng-hide="hideActiveList" ng-if="activeList.length > 0 && lists.length > 0">
+			<div ng-repeat="list in activeList">
+				<h2 class="text-center">{{list.title}}</h2>
+				<ul>
+					<li class="list-item" ng-class="{'list-item-1':item.difficulty === 'easy','list-item-2':item.difficulty === 'medium','list-item-3':item.difficulty === 'hard','list-item-4':item.difficulty === 'challenge'}" ng-repeat="item in list.items">{{item.item}}</li>
+				</ul>
+			</div>
+			<button ng-click="toggleEdit()" type="button">edit</button>
+			<button type="button">delete</button>
+		</div>
 
-	<!-- EDIT ACTIVE LIST -->
+		<!-- EDIT ACTIVE LIST -->
 
-	<div ng-show="showEdit" class="box dark-bg profile-box">
-		<h1 class="text-center">Edit List</h1>
-		<div ng-repeat="list in lists | filter : {active:true}">
-			<form ng-submit="saveList()">
+		<div ng-show="showEdit" class="box dark-bg profile-box">
+			<h1 class="text-center">Edit List</h1>
+			<div ng-repeat="list in lists | filter : {active:true}">
+				<form ng-submit="saveList()">
+					<label>Title:</label>
+					<input name="title" type="text" ng-model="list.title">
+					<label>Items:</label>
+					<div ng-repeat="item in list.items">
+						<input ng-model="item.item">
+						<label>Difficulty:</label>
+						<input type="radio" ng-model="item.difficulty" value="easy">Easy
+						<input type="radio" ng-model="item.difficulty" value="medium">Medium
+						<input type="radio" ng-model="item.difficulty" value="hard">Hard
+						<input type="radio" ng-model="item.difficulty" value="challenge">Challenge
+						<input type="radio" ng-model="item.difficulty" value="0">N/A
+					</div>
+					<input ng-model="item">
+					<label>Difficulty:</label>
+					<input type="radio" ng-model="difficulty" value="easy">Easy
+					<input type="radio" ng-model="difficulty" value="medium">Medium
+					<input type="radio" ng-model="difficulty" value="hard">Hard
+					<input type="radio" ng-model="difficulty" value="challenge">Challenge
+					<input type="radio" ng-model="difficulty" value="0">N/A
+					<button type="button" ng-click="addItem(item,difficulty)">add item</button>
+					
+					<input type="submit" value="save list">
+				</form>
+			</div>
+		</div>
+
+		<!-- CREATE NEW LIST -->
+
+		<div ng-if="showNewForm" class="box light-bg profile-box">
+			<h1 class="text-center">New List</h1>
+			<form ng-submit="createList()">
 				<label>Title:</label>
 				<input name="title" type="text" ng-model="list.title">
 				<label>Items:</label>
-				<div ng-repeat="item in list.items">
-					<input ng-model="item.item">
-					<label>Difficulty:</label>
-					<input type="radio" ng-model="item.difficulty" value="easy">Easy
-					<input type="radio" ng-model="item.difficulty" value="medium">Medium
-					<input type="radio" ng-model="item.difficulty" value="hard">Hard
-					<input type="radio" ng-model="item.difficulty" value="challenge">Challenge
-					<input type="radio" ng-model="item.difficulty" value="0">N/A
-				</div>
+				<ul>
+					<li ng-repeat="thing in list.items">{{thing.item}} - {{thing.difficulty}}</li>
+				</ul>
 				<input ng-model="item">
 				<label>Difficulty:</label>
 				<input type="radio" ng-model="difficulty" value="easy">Easy
@@ -66,34 +88,10 @@
 				<input type="radio" ng-model="difficulty" value="hard">Hard
 				<input type="radio" ng-model="difficulty" value="challenge">Challenge
 				<input type="radio" ng-model="difficulty" value="0">N/A
-				<button type="button" ng-click="addItem(item,difficulty)">add item</button>
-				
+				<button type="button" ng-click="createItem(item,difficulty)">add item</button>
 				<input type="submit" value="save list">
 			</form>
 		</div>
-	</div>
-
-	<!-- CREATE NEW LIST -->
-
-	<div ng-if="showNewForm" class="box light-bg profile-box">
-		<h1 class="text-center">New List</h1>
-		<form ng-submit="createList()">
-			<label>Title:</label>
-			<input name="title" type="text" ng-model="list.title">
-			<label>Items:</label>
-			<ul>
-				<li ng-repeat="thing in list.items">{{thing.item}} - {{thing.difficulty}}</li>
-			</ul>
-			<input ng-model="item">
-			<label>Difficulty:</label>
-			<input type="radio" ng-model="difficulty" value="easy">Easy
-			<input type="radio" ng-model="difficulty" value="medium">Medium
-			<input type="radio" ng-model="difficulty" value="hard">Hard
-			<input type="radio" ng-model="difficulty" value="challenge">Challenge
-			<input type="radio" ng-model="difficulty" value="0">N/A
-			<button type="button" ng-click="createItem(item,difficulty)">add item</button>
-			<input type="submit" value="save list">
-		</form>
 	</div>
 
 

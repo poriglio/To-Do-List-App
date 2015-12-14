@@ -12,8 +12,9 @@ li{
 }
 
 .template{
-	margin-top: 1rem;
 	margin-botton: 1rem;
+	max-width: 1000px;
+	margin-top: 1rem;
 }
 
 .title{
@@ -25,21 +26,32 @@ li{
 	text-align: center;
 }
 
-/*SIGNUP and LOGIN STYLES*/
+.col-thin{
+	width: 33%;
+	display: inline-block;
+	float: right;
+	padding: 0rem 1rem;
+}
+
+.col-wide{
+	width: 66%;
+	display: inline-block;
+	float: left;
+	padding: 0rem 0rem 0rem 1rem;
+}
 
 .box{
 	padding: 1rem;
 	width: 100%;
-	max-width: 30rem;
 	border-radius: 8px;
 }
 
 .profile-box{
-	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
 
 .form-box{
+	max-width: 30rem;
 	height: 14rem;
 }
 
@@ -118,4 +130,17 @@ input[type="radio"]{
 		border-radius: 0px;
 	}
 
+	.col-wide{
+		float: right;
+		padding: 0rem;
+		margin: 0rem;
+		width: 100%;
+	}
+
+	.col-thin{
+		float: left;
+		padding: 0rem;
+		margin: 0rem;
+		width: 100%;
+	}
 }

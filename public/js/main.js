@@ -39,11 +39,20 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 		username : "",
 	}
 
+	$scope.lists = []
+
 	$scope.activeList = []
 	
-	$http.get("/api/list").then(function(returnData){
-		$scope.lists = returnData.data
-	})
+	var getLists = function(){
+		$http.get("/api/list").then(function(returnData){
+			$scope.lists = returnData.data.sort(function(a,b){
+				return b.dateCreated - a.dateCreated
+			})
+			$scope.activeList.push(returnData.data[0])
+		})
+	}
+
+	getLists()
 	
 	$http.get("/api/me").then(function(returnData){
 		if(returnData.data.username){
@@ -54,7 +63,9 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	})
 
 	$scope.selectList = function($index){
+		$scope.hideActiveList = false
 		$scope.showNewForm = false
+		$scope.showEdit = false
 		$scope.activeList = []
 		$scope.lists[$index].active = true
 		for(var i = 0; i < $scope.lists.length; i++){
@@ -74,6 +85,7 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	}
 
 	$scope.saveList = function(){
+		$scope.hideActiveList = false
 		$scope.showEdit = false
 		$http({
 			method  : 'POST',
@@ -91,25 +103,27 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	}
 	
 	$scope.createList = function(){
+
+		$scope.hideActiveList = false
 		$scope.showNewForm = false
 		$http({
 			method  : 'POST',
 			url     : '/api/list',
 			data    : $scope.list,
-		})
-	}
-
-	$scope.closeList = function(){
+		}).then($scope.lists.unshift($scope.list))
 		$scope.activeList = []
+		$scope.activeList.push($scope.list)
 	}
 
 	$scope.toggleEdit = function(){
 		$scope.showNewForm = false
 		if($scope.showEdit){
 			$scope.showEdit = false
+			$scope.hideActiveList = false
 		}
 		else{
 			$scope.showEdit = true
+			$scope.hideActiveList = true
 		}
 	}
 
