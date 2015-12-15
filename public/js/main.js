@@ -45,15 +45,20 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 	
 	var getLists = function(){
 		$http.get("/api/list").then(function(returnData){
-			$scope.lists = returnData.data.sort(function(a,b){
-				return b.dateCreated - a.dateCreated
-			})
-			$scope.activeList.push(returnData.data[0])
-			$scope.activeList[0].active = true
+			if(returnData.data[0]){
+				$scope.lists = returnData.data.sort(function(a,b){
+					return b.dateCreated - a.dateCreated
+				})
+				$scope.activeList.push(returnData.data[0])
+			}
+			else{
+				$scope.showNewForm = true
+			}
 		})
 	}
 
-	getLists()
+
+	getLists();
 	
 	$http.get("/api/me").then(function(returnData){
 		if(returnData.data.username){
@@ -62,6 +67,8 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 			$scope.user = returnData.data
 		}
 	})
+
+
 
 	$scope.selectList = function($index){
 		$scope.hideActiveList = false
@@ -75,6 +82,17 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 			}
 		}
 		$scope.activeList.push($scope.lists[$index])
+		$scope.activeList[0].items = $scope.activeList[0].items.sort(function(a,b){
+			if(a.complete == true){
+				return 1
+			}
+			else if(b.complete == true){
+				return -1
+			}
+			else{
+				return b.difficulty - a.difficulty
+			}
+		})
 	}
 
 	$scope.addItem = function(item,difficulty){
@@ -138,6 +156,15 @@ angular.module("listApp").controller("profileController",["$scope","$http","call
 		else{
 			$scope.showNewForm = true
 		}		
+	}
+
+	$scope.toggleChecked = function($index){
+		if($scope.activeList[0].items[$index].complete){
+			$scope.activeList[0].items[$index].complete = false
+		}
+		else{
+		$scope.activeList[0].items[$index].complete = true
+		}
 	}
 
 }])
